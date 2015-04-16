@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<pluginstrument>
+    <aircraft>Generic</aircraft>
+    <author>Ivan Subotic</author>
+    <compatibleFSX>false</compatibleFSX>
+    <compatibleP3D>false</compatibleP3D>
+    <compatibleXPL>true</compatibleXPL>
+    <configVersion>1</configVersion>
+    <description></description>
+    <pluginInterfaceVersion>100</pluginInterfaceVersion>
+    <prefHeight>928</prefHeight>
+    <prefWidth>160</prefWidth>
+    <type>Garmin GMA 1347</type>
+    <uuid>5d3e6d79-fb51-4cda-bf3c-a5dc2903c2d8</uuid>
+    <version>1</version>
+</pluginstrument>
