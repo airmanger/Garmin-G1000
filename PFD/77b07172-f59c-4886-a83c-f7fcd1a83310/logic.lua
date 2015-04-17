@@ -18,7 +18,7 @@ oilpress_max = 170
 oiltemp_max = 128
 fuelcapacity = 1698*0.453 -- kg
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------- Development --
-deltax = 193
+deltax = 195
 deltay = 56
 
  -------------------------------------------------------------------------------------------------------------------------------------------------- Standard fonts and colors --
@@ -56,9 +56,9 @@ font_white_17 = "-fx-font-family:\"Inconsolata\"; -fx-font-size:17px; -fx-fill: 
 font_white_16 = "-fx-font-family:\"Inconsolata\"; -fx-font-size:16px; -fx-fill: white; -fx-font-weight:regular; -fx-text-alignment: RIGHT;"
 font_white_15 = "-fx-font-family:\"Inconsolata\"; -fx-font-size:15px; -fx-fill: white; -fx-font-weight:regular; -fx-text-alignment: RIGHT;" -- added font for Attitude ind baro display
 -------------------------------------------------------------------------------------------------------------------------------------------------------------- Horizon image --
-img_horizon = img_add("garmin_horizon.png", deltax-750, deltay-450, 2048, 1536)
-img_horizon_scale = img_add("garmin_horizon_scale.png", deltax-562, deltay-483, 2048, 1536)
-viewport_rect(img_horizon_scale, 320+deltax, 125+deltay, 280, 260)
+img_horizon = img_add("garmin_horizon.png", deltax-752, deltay-450, 2048, 1536)
+img_horizon_scale = img_add("garmin_horizon_scale.png", deltax-564, deltay-483, 2048, 1536)
+viewport_rect(img_horizon_scale, 318+deltax, 127+deltay, 280, 268)
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------- Glass panel backdrop --
 img_add("garmin_pfd_backdrop.png",deltax, deltay, 1024, 768)
@@ -72,8 +72,8 @@ function item_value_callback_speed(i)
     return string.format("%d", 0 - (i * 10) )
 end
 
-running_text_speed = running_txt_add_ver(145+deltax, 97+deltay, 7, 68, 57, item_value_callback_speed, font_white_25)
-running_img_speed  = running_img_add_ver("garmin_speedtapeimage.png", 219+deltax, 113+deltay, 7, 20, 57)
+running_text_speed = running_txt_add_ver(143+deltax, 97+deltay, 7, 68, 57, item_value_callback_speed, font_white_25)
+running_img_speed  = running_img_add_ver("garmin_speedtapeimage.png", 217+deltax, 113+deltay, 7, 20, 57)
 
 running_img_move_carot(running_img_speed, 0)
 running_txt_move_carot(running_text_speed, 0)
@@ -83,18 +83,18 @@ function item_value_callback_alt(i)
 	return string.format("%d", i * 100 * -1 )
 end
 
-running_text_alt = running_txt_add_ver(720+deltax, 100+deltay, 7, 80, 57, item_value_callback_alt, font_white_25)
-running_img_alt  = running_img_add_ver("garmin_alttapeimage.png", 707+deltax, 114+deltay, 6, 16, 57)
+running_text_alt = running_txt_add_ver(718+deltax, 100+deltay, 7, 80, 57, item_value_callback_alt, font_white_25)
+running_img_alt  = running_img_add_ver("garmin_alttapeimage.png", 705+deltax, 114+deltay, 6, 16, 57)
 
 running_img_move_carot(running_img_alt, 0)
 running_txt_move_carot(running_text_alt, 0)
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------- Speed amd alt boxes --
-img_add("garmin_speedbox.png",159+deltax, 250+deltay, 79, 69)
-img_add("garmin_altbox.png",707+deltax, 252+deltay, 98, 66)
+img_add("garmin_speedbox.png",157+deltax, 250+deltay, 79, 69)
+img_add("garmin_altbox.png",705+deltax, 252+deltay, 98, 66)
 
 
-txt_add(call_sign, font_orange_20, 880+deltax, 349-144+deltay, 200, 60)
+txt_add(call_sign, font_orange_20, 878+deltax, 349-144+deltay, 200, 60)
 --FD_bars = img_add ( "fd_bars.png" , 545 , 342 , 219 , 33 )
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------- Running text airspeed --
@@ -108,9 +108,9 @@ function item_value_callback_inner_speed_minor(i)
 	
 end
 
-running_text_inner_speed_minor_id = running_txt_add_ver(195+deltax, 237+deltay, 3, 30, 30, item_value_callback_inner_speed_minor, font_white_32)
+running_text_inner_speed_minor_id = running_txt_add_ver(193+deltax, 237+deltay, 3, 30, 30, item_value_callback_inner_speed_minor, font_white_32)
 running_txt_move_carot(running_text_inner_speed_minor_id, 0)
-running_txt_viewport_rect(running_text_inner_speed_minor_id, 195+deltax, 251+deltay, 30, 65)
+running_txt_viewport_rect(running_text_inner_speed_minor_id, 193+deltax, 251+deltay, 30, 65)
 
 function item_value_callback_inner_speed_major(i)
     
@@ -122,13 +122,13 @@ function item_value_callback_inner_speed_major(i)
 	
 end
 
-running_text_inner_speed_major_id = running_txt_add_ver(155+deltax, 237+deltay, 3, 52, 30, item_value_callback_inner_speed_major, font_white_32)
+running_text_inner_speed_major_id = running_txt_add_ver(153+deltax, 237+deltay, 3, 52, 30, item_value_callback_inner_speed_major, font_white_32)
 running_txt_move_carot(running_text_inner_speed_major_id, 0)
-running_txt_viewport_rect(running_text_inner_speed_major_id, 155+deltax, 265+deltay, 52, 35)
+running_txt_viewport_rect(running_text_inner_speed_major_id, 153+deltax, 265+deltay, 52, 35)
 
-txt_add("TAS", font_white_18, 154+deltax, 460+deltay, 30, 40)
-txt_tas = txt_add("000", font_white_25, 184+deltax, 456+deltay, 40, 40)
-txt_add("KT", font_white_15, 210+deltax, 465+deltay, 30, 40)
+txt_add("TAS", font_white_18, 152+deltax, 460+deltay, 30, 40)
+txt_tas = txt_add("000", font_white_25, 182+deltax, 456+deltay, 40, 40)
+txt_add("KT", font_white_15, 208+deltax, 465+deltay, 30, 40)
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------- Running text altitude --
 function item_value_callback_inner_alt_minor(i)
@@ -143,9 +143,9 @@ function item_value_callback_inner_alt_minor(i)
 	
 end
 
-running_text_inner_alt_minor_id = running_txt_add_ver(771+deltax,240+deltay, 3, 30, 30, item_value_callback_inner_alt_minor, font_white_25)
+running_text_inner_alt_minor_id = running_txt_add_ver(769+deltax,240+deltay, 3, 30, 30, item_value_callback_inner_alt_minor, font_white_25)
 running_txt_move_carot(running_text_inner_alt_minor_id, 0)
-running_txt_viewport_rect(running_text_inner_alt_minor_id, 775+deltax, 252+deltay, 30, 66)
+running_txt_viewport_rect(running_text_inner_alt_minor_id, 773+deltax, 252+deltay, 30, 66)
 
 
 function item_value_callback_inner_alt_major100(i)
@@ -158,9 +158,9 @@ function item_value_callback_inner_alt_major100(i)
 	
 end
 
-running_text_inner_alt_major100_id = running_txt_add_ver(759+deltax, 240+deltay, 3, 15, 30, item_value_callback_inner_alt_major100, font_white_25)
+running_text_inner_alt_major100_id = running_txt_add_ver(757+deltax, 240+deltay, 3, 15, 30, item_value_callback_inner_alt_major100, font_white_25)
 running_txt_move_carot(running_text_inner_alt_major100_id, 0)
-running_txt_viewport_rect(running_text_inner_alt_major100_id, 759+deltax, 265+deltay, 20, 40)
+running_txt_viewport_rect(running_text_inner_alt_major100_id, 757+deltax, 265+deltay, 20, 40)
 
 function item_value_callback_inner_alt_major1000(i)
 
@@ -172,13 +172,13 @@ function item_value_callback_inner_alt_major1000(i)
 	
 end
 
-running_text_inner_alt_major1000_id = running_txt_add_ver(726+deltax, 231+deltay, 3, 35, 35, item_value_callback_inner_alt_major1000, font_white_33)
+running_text_inner_alt_major1000_id = running_txt_add_ver(724+deltax, 231+deltay, 3, 35, 35, item_value_callback_inner_alt_major1000, font_white_33)
 running_txt_move_carot(running_text_inner_alt_major1000_id, 0)
-running_txt_viewport_rect(running_text_inner_alt_major1000_id, 726+deltax, 265+deltay, 35, 40)
+running_txt_viewport_rect(running_text_inner_alt_major1000_id, 724+deltax, 265+deltay, 35, 40)
 
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------- HSI parts --
-img_compasrose = img_add("garmin_compassrose.png", 317+deltax, 444+deltay, 285, 285)
+img_compasrose = img_add("garmin_compassrose.png", 315+deltax, 444+deltay, 285, 285)
 
 --[[
 img_hsi_rose = img_add("eclipse_compass.png",256-160+deltax,576-160+deltay,320,320)
@@ -198,7 +198,9 @@ txt_wind_speed = txt_add("0", font_limegreen_18, 5+deltax,510+deltay-65, 100, 60
 ------------------------------------------------------------------------------------------------------------------------------------------------------- Frame image --
 
 -- on top of this backdrop place the buttons
-img_add_fullscreen("garmin_panel_backdrop.png")
+--img_add_fullscreen("garmin_panel_backdrop.png")
+
+img_add("garmin_panel_backdrop.png", 0, 0, 1414, 928)
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------- Atitude get data --
 function IBS_atitude(roll, pitch, verticalspeed, vs_tgt, rad_alt)    -- add target bug on 
@@ -211,22 +213,25 @@ function IBS_atitude(roll, pitch, verticalspeed, vs_tgt, rad_alt)    -- add targ
     radial = math.rad(roll * -1)
     x = -(math.sin(radial) * pitch * 7.2)
     y = (math.cos(radial) * pitch * 7.2)
-    move(img_horizon, x+deltax-565, y+deltay-483, nil, nil)
+    move(img_horizon, x+deltax-567, y+deltay-483, nil, nil)
     
 		-- horizon scale
-		move(img_horizon_scale, x+deltax-565, y+deltay-483, nil, nil)
+		move(img_horizon_scale, x+deltax-567, y+deltay-483, nil, nil)
 		img_rotate(img_horizon_scale  , roll * -1)
 
 		
 		-- roll indicator scale
-		-- center of rotation needs to be moved: (512, 384) --> (458, 283) = diff: (54, 101)
+		-- center of rotation needs to be moved: from (512, 384) to (459, 284) -> diff: (53, 100)
 		-- x2 = cos(roll) * (x1 - x0) - sin(roll) * (y1 - y0) + x0
 		-- y2 = sin(roll) * (x1 - x0) + cos(roll) * (y1 - y0) + y0
-		--x2 = math.cos(roll * -1) * (512 - 458) - math.sin(roll * -1) * (458 - 283) + 458
-		--y2 = math.sin(roll * -1) * (512 - 458) + math.cos(roll * -1) * (458 - 283) + 283		
-		move(img_roll_indicator, 54+deltax, 101+deltay, nil, nil)
+		radial = math.rad(roll * -1)
+		x2 = math.cos(radial) * (512 - 459) - math.sin(radial) * (384 - 284) + 459
+		y2 = math.sin(radial) * (512 - 459) + math.cos(radial) * (384 - 284) + 284		
+		
+		print(x2)
+		print(y2)
+		move(img_roll_indicator, x2 + deltax - 512, y2 + deltay - 384, nil, nil)
 		img_rotate(img_roll_indicator  , roll * -1)
-		--move(img_roll_indicator, -54+deltax, -101+deltay, nil, nil)
 		
 		-- speed
     if verticalspeed > 5200 then verticalspeed = 4200 end
@@ -267,8 +272,8 @@ function IBS_airspeed(airspeed,ias)
 		yspeed = 171 + (airspeed * 6.6)
 		yspeed = var_cap(yspeed, 170, 342)
 	
-		running_txt_viewport_rect(running_text_speed, 145+deltax, 113+deltay, 95, yspeed)
-		running_img_viewport_rect(running_img_speed, 219+deltax, 113+deltay, 20, yspeed)
+		running_txt_viewport_rect(running_text_speed, 143+deltax, 113+deltay, 95, yspeed)
+		running_img_viewport_rect(running_img_speed, 217+deltax, 113+deltay, 20, yspeed)
 		
 		-- Speed indicator running text
 		running_txt_move_carot(running_text_inner_speed_minor_id, (airspeed / 1) * -1)
@@ -296,8 +301,8 @@ function IBS_altitude(altitude)
 	yalt = 171 + (altitude * 1.16)
 	yalt = var_cap(yalt, 171, 342)
 	
-	running_txt_viewport_rect(running_text_alt, 663+deltax, 113+deltay, 137, yalt)
-	running_img_viewport_rect(running_img_alt, 663+deltax, 113+deltay, 137, yalt)
+	running_txt_viewport_rect(running_text_alt, 661+deltax, 113+deltay, 137, yalt)
+	running_img_viewport_rect(running_img_alt, 661+deltax, 113+deltay, 137, yalt)
 	
 	-- Altitude indicator running text
 	running_txt_move_carot(running_text_inner_alt_minor_id, (altitude / 10) * -1)
