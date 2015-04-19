@@ -258,6 +258,12 @@ function IBS_atitude(roll, pitch, verticalspeed, vs_tgt, rad_alt)    -- add targ
      visible( txt_ra, rad_alt <= 2500 and rad_alt > 0)
     
      txt_set(txt_ra,string.format("RA %0d",(math.floor(rad_alt/10)*10)))
+		 
+		 
+		 -- slip (+/- 8 degrees)
+		 slip = var_cap(slip, -8, 8)
+		 slip_rate = slip / 8
+		 move(img_slip_indicator, (slip_rate*20) + deltax, nil, nil, nil)
 end
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------- Airspeed get data --
@@ -336,7 +342,8 @@ end
 ----------------------------------------------------------------------------------------------------------------------------------------------------------- Atitude get data --
 xpl_dataref_subscribe("sim/flightmodel/position/phi", "FLOAT",
                         "sim/flightmodel/position/theta", "FLOAT",
-                        "sim/flightmodel/position/vh_ind_fpm", "FLOAT",  
+                        "sim/flightmodel/position/vh_ind_fpm", "FLOAT",
+												"sim/cockpit2/gauges/indicators/slip_deg", "FLOAT",
                         "sim/cockpit2/autopilot/vvi_dial_fpm", "FLOAT",
                         "sim/cockpit2/gauges/indicators/radio_altimeter_height_ft_pilot","FLOAT", IBS_atitude)-- actual vvi tgt vvi sim/cockpit2/gauges/indicators/vvi_fpm_pilot
 												
