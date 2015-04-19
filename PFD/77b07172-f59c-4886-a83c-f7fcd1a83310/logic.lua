@@ -55,9 +55,17 @@ font_white_18 = "-fx-font-family:\"Inconsolata\"; -fx-font-size:18px; -fx-fill: 
 font_white_17 = "-fx-font-family:\"Inconsolata\"; -fx-font-size:17px; -fx-fill: white; -fx-font-weight:regular; -fx-text-alignment: RIGHT;"
 font_white_16 = "-fx-font-family:\"Inconsolata\"; -fx-font-size:16px; -fx-fill: white; -fx-font-weight:regular; -fx-text-alignment: RIGHT;"
 font_white_15 = "-fx-font-family:\"Inconsolata\"; -fx-font-size:15px; -fx-fill: white; -fx-font-weight:regular; -fx-text-alignment: RIGHT;" -- added font for Attitude ind baro display
+
+------------------------------------------------------------------------------------------------------------------------------------------------------- Frame image --
+-- on top of this backdrop place the buttons
+--img_add_fullscreen("garmin_panel_backdrop.png")
+
+img_add("garmin_panel_backdrop.png", 0, 0, 1414, 928)
+
 -------------------------------------------------------------------------------------------------------------------------------------------------------------- Horizon image --
 img_horizon = img_add("garmin_horizon.png", deltax-752, deltay-450, 2048, 1536)
-img_horizon_scale = img_add("garmin_horizon_scale.png", deltax-564, deltay-483, 2048, 1536)
+viewport_rect(img_horizon, deltax, deltay, 1024, 768)
+img_horizon_scale = img_add("garmin_horizon_scale.png", deltax-565, deltay-483, 2048, 1536)
 viewport_rect(img_horizon_scale, 318+deltax, 127+deltay, 280, 268)
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------- Glass panel backdrop --
@@ -178,7 +186,7 @@ running_txt_viewport_rect(running_text_inner_alt_major1000_id, 724+deltax, 265+d
 
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------- HSI parts --
-img_compasrose = img_add("garmin_compassrose.png", 315+deltax, 444+deltay, 285, 285)
+img_compasrose = img_add("garmin_compassrose.png", 317+deltax, 444+deltay, 285, 285)
 
 --[[
 img_hsi_rose = img_add("eclipse_compass.png",256-160+deltax,576-160+deltay,320,320)
@@ -193,14 +201,6 @@ txt_nav_mode = txt_add("NAV1", font_limegreen_20, 880+deltax, 349-120+deltay, 20
 img_wind_rose_arrow = img_add("wind_rose_arrow.png",30+deltax,460+deltay,50,50)
 txt_wind_speed = txt_add("0", font_limegreen_18, 5+deltax,510+deltay-65, 100, 60)
 --]]
-
-
-------------------------------------------------------------------------------------------------------------------------------------------------------- Frame image --
-
--- on top of this backdrop place the buttons
---img_add_fullscreen("garmin_panel_backdrop.png")
-
-img_add("garmin_panel_backdrop.png", 0, 0, 1414, 928)
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------- Attitude get data --
 function IBS_attitude(roll, pitch, verticalspeed, slip, vs_tgt, rad_alt)    -- add target bug on 
@@ -217,7 +217,7 @@ function IBS_attitude(roll, pitch, verticalspeed, slip, vs_tgt, rad_alt)    -- a
     move(img_horizon, x+deltax-567, y+deltay-483, nil, nil)
     
 		-- horizon scale
-		move(img_horizon_scale, x+deltax-567, y+deltay-483, nil, nil)
+		move(img_horizon_scale, x+deltax-565, y+deltay-483, nil, nil)
 		img_rotate(img_horizon_scale  , roll * -1)
 
 		
