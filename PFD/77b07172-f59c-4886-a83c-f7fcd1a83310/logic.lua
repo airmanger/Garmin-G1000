@@ -202,15 +202,16 @@ txt_wind_speed = txt_add("0", font_limegreen_18, 5+deltax,510+deltay-65, 100, 60
 
 img_add("garmin_panel_backdrop.png", 0, 0, 1414, 928)
 
------------------------------------------------------------------------------------------------------------------------------------------------------------ Atitude get data --
-function IBS_atitude(roll, pitch, verticalspeed, vs_tgt, rad_alt)    -- add target bug on 
+----------------------------------------------------------------------------------------------------------------------------------------------------------- Attitude get data --
+function IBS_attitude(roll, pitch, verticalspeed, slip, vs_tgt, rad_alt)    -- add target bug on 
 
 --vs_status= vs_tgt
     
+		radial = math.rad(roll * -1)
+		
 		-- horizon
 		img_rotate(img_horizon  , roll * -1)
     pitch = var_cap(pitch,-60,60)
-    radial = math.rad(roll * -1)
     x = -(math.sin(radial) * pitch * 7.2)
     y = (math.cos(radial) * pitch * 7.2)
     move(img_horizon, x+deltax-567, y+deltay-483, nil, nil)
@@ -221,19 +222,15 @@ function IBS_atitude(roll, pitch, verticalspeed, vs_tgt, rad_alt)    -- add targ
 
 		
 		-- roll indicator scale
-		-- center of rotation needs to be moved: from (512, 384) to (459, 284) -> diff: (53, 100)
+		-- center of rotation needs to be moved: from (512, 384) to (459, 284)
 		-- x2 = cos(roll) * (x1 - x0) - sin(roll) * (y1 - y0) + x0
 		-- y2 = sin(roll) * (x1 - x0) + cos(roll) * (y1 - y0) + y0
-		radial = math.rad(roll * -1)
 		x2 = math.cos(radial) * (512 - 459) - math.sin(radial) * (384 - 284) + 459
 		y2 = math.sin(radial) * (512 - 459) + math.cos(radial) * (384 - 284) + 284		
-		
-		print(x2)
-		print(y2)
 		move(img_roll_indicator, x2 + deltax - 512, y2 + deltay - 384, nil, nil)
 		img_rotate(img_roll_indicator  , roll * -1)
 		
-		-- speed
+		-- vertical speed
     if verticalspeed > 5200 then verticalspeed = 4200 end
     if verticalspeed < -5200 then verticalspeed = -4200 end
       if vs_tgt > 5000 then vs_tgt = 5000 end
@@ -339,13 +336,13 @@ end
  
 -- Data subscribtions --
 
------------------------------------------------------------------------------------------------------------------------------------------------------------ Atitude get data --
+----------------------------------------------------------------------------------------------------------------------------------------------------------- Attitude get data --
 xpl_dataref_subscribe("sim/flightmodel/position/phi", "FLOAT",
                         "sim/flightmodel/position/theta", "FLOAT",
                         "sim/flightmodel/position/vh_ind_fpm", "FLOAT",
 												"sim/cockpit2/gauges/indicators/slip_deg", "FLOAT",
                         "sim/cockpit2/autopilot/vvi_dial_fpm", "FLOAT",
-                        "sim/cockpit2/gauges/indicators/radio_altimeter_height_ft_pilot","FLOAT", IBS_atitude)-- actual vvi tgt vvi sim/cockpit2/gauges/indicators/vvi_fpm_pilot
+                        "sim/cockpit2/gauges/indicators/radio_altimeter_height_ft_pilot","FLOAT", IBS_attitude)-- actual vvi tgt vvi sim/cockpit2/gauges/indicators/vvi_fpm_pilot
 												
 -------------------------------------------------------------------------------------------------------------------------------------------------------------- Speed get data --
 xpl_dataref_subscribe("sim/cockpit2/gauges/indicators/airspeed_kts_pilot", "FLOAT",
