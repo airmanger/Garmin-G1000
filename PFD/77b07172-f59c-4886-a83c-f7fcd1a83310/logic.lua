@@ -201,6 +201,7 @@ txt_baro_unit = txt_add("HPA", font_skyblue_20, 771+deltax, 460+deltay, 30, 23)
 
 -- HSI parts -------------------------------------------------------------------------------------------------------------------
 img_compasrose = img_add("garmin_compassrose.png", 317+deltax, 444+deltay, 285, 285)
+txt_heading = txt_add("000°", font_white_30_c, 430+deltax, 401+deltay, 64, 27)
 
 --[[
 img_hsi_rose = img_add("eclipse_compass.png",256-160+deltax,576-160+deltay,320,320)
@@ -332,6 +333,13 @@ function IBS_altitude(altitude, vspeed, baro_inhg)
 end
 
 
+-- Direction indicator -------------------------------------------------------------------------------------------------------------
+function IBS_HSI(heading, crs_bug, hdg_bug)
+  
+	txt_set(txt_heading, var_round(heading,0) .. "°")
+  img_rotate(img_compasrose, -heading)
+	
+end
 
 
 
@@ -358,3 +366,7 @@ xpl_dataref_subscribe("sim/cockpit2/gauges/indicators/altitude_ft_pilot", "FLOAT
 											"sim/cockpit2/gauges/indicators/vvi_fpm_pilot", "FLOAT",
 											"sim/cockpit2/gauges/indicators/barometer_setting_in_hg_pilot,", "FLOAT",
 											IBS_altitude)
+
+-- HSI get data
+xpl_dataref_subscribe("sim/cockpit2/gauges/indicators/heading_AHARS_deg_mag_pilot", "FLOAT",
+											IBS_HSI)
