@@ -252,8 +252,8 @@ function IBS_attitude(roll, pitch, slip)    -- add target bug on
 		 
 end
 
-function IBS_airspeed(airspeed,ias)
 -- Airspeed get data -------------------------------------------------------------------------------------------------------------------
+function IBS_airspeed(airspeed, ias)
 		
 		airspeed = var_cap(airspeed, 0, 999)
 		
@@ -358,9 +358,9 @@ xpl_dataref_subscribe("sim/cockpit2/gauges/roll_AHARS_deg_pilot", "FLOAT",
 												
 -- Speed get data --------------------------------------------------------------------------------------------------------------------
 xpl_dataref_subscribe("sim/cockpit2/gauges/indicators/airspeed_kts_pilot", "FLOAT",
-												                        "sim/cockpit/autopilot/airspeed", "FLOAT", IBS_airspeed)
+											"sim/cockpit/autopilot/airspeed", "FLOAT",
+											IBS_airspeed)
 
-xpl_dataref_subscribe("sim/cockpit2/gauges/indicators/radio_altimeter_height_ft_pilot","FLOAT", IBS_altitude)-- Altitude get data -----------------------------------------------------------------------------------------------------------------
 -- Altitude get data -----------------------------------------------------------------------------------------------------------------
 xpl_dataref_subscribe("sim/cockpit2/gauges/indicators/altitude_ft_pilot", "FLOAT",
 											"sim/cockpit2/gauges/indicators/vvi_fpm_pilot", "FLOAT",
