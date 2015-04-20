@@ -43,6 +43,7 @@ txt_load_font("Inconsolata-Bold.ttf")
 txt_load_font("Inconsolata-Regular.ttf")
 font_white_33 = "-fx-font-family:\"Inconsolata\"; -fx-font-size:33px; -fx-fill: white; -fx-font-weight:regular; -fx-text-alignment: RIGHT;"
 font_white_32 = "-fx-font-family:\"Inconsolata\"; -fx-font-size:32px; -fx-fill: white; -fx-font-weight:regular; -fx-text-alignment: RIGHT;"
+font_white_30_c = "-fx-font-family:\"Inconsolata\"; -fx-font-size:30px; -fx-fill: white; -fx-font-weight:regular; -fx-text-alignment: CENTER;"
 font_white_25 = "-fx-font-family:\"Inconsolata\"; -fx-font-size:25px; -fx-fill: white; -fx-font-weight:regular; -fx-text-alignment: RIGHT;"
 font_white_22 = "-fx-font-family:\"Inconsolata\"; -fx-font-size:22px; -fx-fill: white; -fx-font-weight:regular; -fx-text-alignment: RIGHT;"
 font_white_21 = "-fx-font-family:\"Inconsolata\"; -fx-font-size:21px; -fx-fill: white; -fx-font-weight:regular; -fx-text-alignment: RIGHT;"
@@ -52,6 +53,9 @@ font_white_18 = "-fx-font-family:\"Inconsolata\"; -fx-font-size:18px; -fx-fill: 
 font_white_17 = "-fx-font-family:\"Inconsolata\"; -fx-font-size:17px; -fx-fill: white; -fx-font-weight:regular; -fx-text-alignment: RIGHT;"
 font_white_16 = "-fx-font-family:\"Inconsolata\"; -fx-font-size:16px; -fx-fill: white; -fx-font-weight:regular; -fx-text-alignment: RIGHT;"
 font_white_15 = "-fx-font-family:\"Inconsolata\"; -fx-font-size:15px; -fx-fill: white; -fx-font-weight:regular; -fx-text-alignment: RIGHT;" -- added font for Attitude ind baro display
+
+font_skyblue_25 = "-fx-font-family:\"Inconsolata\"; -fx-font-size:25px; -fx-fill: skyblue; -fx-font-weight:regular; -fx-text-alignment: RIGHT;"
+font_skyblue_20 = "-fx-font-family:\"Inconsolata\"; -fx-font-size:20px; -fx-fill: skyblue; -fx-font-weight:regular; -fx-text-alignment: LEFT;"
 
 -- Frame image -------------------------------------------------------------------------------------------------------------------
 -- on top of this backdrop place the buttons
@@ -185,6 +189,16 @@ running_txt_viewport_rect(running_text_inner_alt_major1000_id, 724+deltax, 265+d
 -- Vertical speed -------------------------------------------------------------------------------------------------------------
 img_vertical_speed_pointer = img_add("garmin_vertical_speed_pointer.png", deltax, deltay, 1024, 768)
 txt_vertical_speed = txt_add("0", font_white_22, 814+deltax, 272+deltay, 60, 20)
+
+
+
+-- Alltimeter barometric preassure setting ------------------------------------------------------------------------------------------------
+
+txt_baro_preassure = txt_add("1014", font_skyblue_25, 720+deltax, 456+deltay, 50, 23)
+txt_baro_unit = txt_add("HPA", font_skyblue_20, 771+deltax, 460+deltay, 30, 23)
+
+
+
 -- HSI parts -------------------------------------------------------------------------------------------------------------------
 img_compasrose = img_add("garmin_compassrose.png", 317+deltax, 444+deltay, 285, 285)
 
@@ -266,8 +280,8 @@ function IBS_airspeed(airspeed,ias)
 end
 
 
-function IBS_altitude(altitude)
 -- Altitude get data -------------------------------------------------------------------------------------------------------------------
+function IBS_altitude(altitude, vspeed, baro_inhg)
 	
 	-- Altitude indicator running image
 	altitude = var_cap(altitude, 0, 40000)
@@ -344,4 +358,5 @@ xpl_dataref_subscribe("sim/cockpit2/gauges/indicators/radio_altimeter_height_ft_
 -- Altitude get data -----------------------------------------------------------------------------------------------------------------
 xpl_dataref_subscribe("sim/cockpit2/gauges/indicators/altitude_ft_pilot", "FLOAT",
 											"sim/cockpit2/gauges/indicators/vvi_fpm_pilot", "FLOAT",
+											"sim/cockpit2/gauges/indicators/barometer_setting_in_hg_pilot,", "FLOAT",
 											IBS_altitude)
