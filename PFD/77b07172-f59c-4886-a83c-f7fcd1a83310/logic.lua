@@ -216,8 +216,8 @@ img_wind_rose_arrow = img_add("wind_rose_arrow.png",30+deltax,460+deltay,50,50)
 txt_wind_speed = txt_add("0", font_limegreen_18, 5+deltax,510+deltay-65, 100, 60)
 --]]
 
-function IBS_attitude(roll, pitch, verticalspeed, slip, vs_tgt, rad_alt)    -- add target bug on 
 -- Attitude get data -------------------------------------------------------------------------------------------------------------
+function IBS_attitude(roll, pitch, slip)    -- add target bug on 
 
 --vs_status= vs_tgt
     
@@ -244,11 +244,11 @@ function IBS_attitude(roll, pitch, verticalspeed, slip, vs_tgt, rad_alt)    -- a
 		move(img_roll_indicator, x2 + deltax - 512, y2 + deltay - 384, nil, nil)
 		img_rotate(img_roll_indicator  , roll * -1)
 		 
+		-- slip (+/- 8 degrees)
+		slip = var_cap(slip, -8, 8)
+		slip_rate = slip / 8
+		move(img_slip_indicator, (slip_rate*20) + deltax, nil, nil, nil)
 		 
-		 -- slip (+/- 8 degrees)
-		 slip = var_cap(slip, -8, 8)
-		 slip_rate = slip / 8
-		 move(img_slip_indicator, (slip_rate*20) + deltax, nil, nil, nil)
 end
 
 function IBS_airspeed(airspeed,ias)
@@ -342,13 +342,11 @@ end
  
 -- Data subscribtions --
 
-xpl_dataref_subscribe("sim/flightmodel/position/phi", "FLOAT",
-                        "sim/flightmodel/position/theta", "FLOAT",
-                        "sim/flightmodel/position/vh_ind_fpm", "FLOAT",
-												"sim/cockpit2/gauges/indicators/slip_deg", "FLOAT",
-                        "sim/cockpit2/autopilot/vvi_dial_fpm", "FLOAT",
-                        "sim/cockpit2/gauges/indicators/radio_altimeter_height_ft_pilot","FLOAT", IBS_attitude)-- actual vvi tgt vvi sim/cockpit2/gauges/indicators/vvi_fpm_pilot
 -- Attitude get data -----------------------------------------------------------------------------------------------------------------
+xpl_dataref_subscribe("sim/cockpit2/gauges/roll_AHARS_deg_pilot", "FLOAT",
+                      "sim/cockpit2/gauges/pitch_AHARS_deg_pilot", "FLOAT",
+											"sim/cockpit2/gauges/indicators/slip_deg", "FLOAT",
+											IBS_attitude)
 												
 -- Speed get data --------------------------------------------------------------------------------------------------------------------
 xpl_dataref_subscribe("sim/cockpit2/gauges/indicators/airspeed_kts_pilot", "FLOAT",
