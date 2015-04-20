@@ -182,6 +182,9 @@ running_txt_move_carot(running_text_inner_alt_major1000_id, 0)
 running_txt_viewport_rect(running_text_inner_alt_major1000_id, 724+deltax, 265+deltay, 35, 40)
 
 
+-- Vertical speed -------------------------------------------------------------------------------------------------------------
+img_vertical_speed_pointer = img_add("garmin_vertical_speed_pointer.png", deltax, deltay, 1024, 768)
+txt_vertical_speed = txt_add("0", font_white_22, 814+deltax, 272+deltay, 60, 20)
 -- HSI parts -------------------------------------------------------------------------------------------------------------------
 img_compasrose = img_add("garmin_compassrose.png", 317+deltax, 444+deltay, 285, 285)
 
@@ -226,32 +229,6 @@ function IBS_attitude(roll, pitch, verticalspeed, slip, vs_tgt, rad_alt)    -- a
 		y2 = math.sin(radial) * (512 - 459) + math.cos(radial) * (384 - 284) + 284		
 		move(img_roll_indicator, x2 + deltax - 512, y2 + deltay - 384, nil, nil)
 		img_rotate(img_roll_indicator  , roll * -1)
-		
-		-- vertical speed
-    if verticalspeed > 5200 then verticalspeed = 4200 end
-    if verticalspeed < -5200 then verticalspeed = -4200 end
-      if vs_tgt > 5000 then vs_tgt = 5000 end
-    if vs_tgt < -5000 then vs_tgt = -5000 end
-    if math.abs(verticalspeed) <= 1000  then
-    move(img_vertical_speed_indicator, nil, 189+deltay- 1- verticalspeed *38/1000, nil, nil)
-    elseif verticalspeed > 1000 then
-     move(img_vertical_speed_indicator, nil, 189+deltay- 1 - 38-(verticalspeed-1000)*75/4000, nil, nil)
-     else	
-        move(img_vertical_speed_indicator, nil, 189+deltay- 1 + 38 -(verticalspeed+1000)*75/4000, nil, nil)
-    end
-    if math.abs(vs_tgt) <= 1000  then
-    move(img_vertical_speed_target, nil, 189+deltay-4 - vs_tgt *38/1000, nil, nil)
-    elseif vs_tgt > 1000 then
-     move(img_vertical_speed_target, nil, 189+deltay- 4  - 38-(vs_tgt-1000)*75/4000, nil, nil)
-     else	
-        move(img_vertical_speed_target, nil, 189+deltay- 4 + 38 -(vs_tgt+1000)*75/4000, nil, nil)
-    end
-    if verticalspeed == 0 then verticalspeed=0.0001 end
-     txt_set(txt_vs_act, verticalspeed/ math.abs(verticalspeed) * math.floor(math.abs(verticalspeed/100) )*100 )
-    
-     visible( txt_ra, rad_alt <= 2500 and rad_alt > 0)
-    
-     txt_set(txt_ra,string.format("RA %0d",(math.floor(rad_alt/10)*10)))
 		 
 		 
 		 -- slip (+/- 8 degrees)
@@ -319,8 +296,26 @@ function IBS_altitude(altitude)
 		running_txt_move_carot(running_text_inner_alt_major1000_id, math.floor( altitude / 1000 ) * -1)
 	end
 	
-end
+	-- Vertical speed
+  vspeed = var_cap(vspeed, -2000, 2000)
 
+	vspeed_rate = vspeed / 2000
+	
+	move(img_vertical_speed_pointer, nil, (vspeed_rate * -141) + deltay, nil, nil)
+	 
+	txt_set(txt_vertical_speed, var_round(vspeed_rate, 0))
+	move(txt_vertical_speed, nil, (vspeed_rate * -141) + 272 + deltay, nil, nil)
+	
+	-- Altimeter barometric preasure setting
+	transision_altitude = 10000
+	std_baro_inhg = 29.92
+	std_baro_hpa = 1013.25
+	baro_hpa = baro_inhg / 0.0295300
+	
+	txt_set(txt_baro_unit, "HPA")
+	txt_set(txt_baro_preassure, var_round(baro_hpa, 0))
+	
+end
 
 
 
@@ -346,3 +341,7 @@ xpl_dataref_subscribe("sim/cockpit2/gauges/indicators/airspeed_kts_pilot", "FLOA
 												                        "sim/cockpit/autopilot/airspeed", "FLOAT", IBS_airspeed)
 
 xpl_dataref_subscribe("sim/cockpit2/gauges/indicators/radio_altimeter_height_ft_pilot","FLOAT", IBS_altitude)-- Altitude get data -----------------------------------------------------------------------------------------------------------------
+-- Altitude get data -----------------------------------------------------------------------------------------------------------------
+xpl_dataref_subscribe("sim/cockpit2/gauges/indicators/altitude_ft_pilot", "FLOAT",
+											"sim/cockpit2/gauges/indicators/vvi_fpm_pilot", "FLOAT",
+											IBS_altitude)
