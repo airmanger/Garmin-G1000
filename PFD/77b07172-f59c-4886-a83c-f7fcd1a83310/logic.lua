@@ -1,14 +1,10 @@
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
--- Glass Panel fitted the free X-Plane Eclipse 550 small jet
--- Panel can be used for other (2 engine) aircrafts, by adjusting the parameters
--- made by macnfly June 2014
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
--- Autopilot buttons send and show the correct number - check !
--- Should we have the detail screens for Electric, Pressure and Fuel overview ?
--- Airspeed colored band may not be showing the correct levels
--- Flight planning is INOP for now
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------------------------------------------------------------------ Parameters --
+---------------------------------------------------------------------------------------------------------------------------------
+-- Glass Panel based on the Garmin G1000 PFD for Cessna
+-- Panel can be used for other (1 engine) aircrafts, by adjusting the parameters
+-- made by Ivan Subotic April 2015
+----------------------------------------------------------------------------------------------------------------------------------
+
+-- Parameters -------------------------------------------------------------------------------------------------------------------
 call_sign = "N31SL"
 n1_max = 100
 itt_max = 810
@@ -17,11 +13,12 @@ n2_max = 100
 oilpress_max = 170
 oiltemp_max = 128
 fuelcapacity = 1698*0.453 -- kg
----------------------------------------------------------------------------------------------------------------------------------------------------------------- Development --
+
+-- Development -------------------------------------------------------------------------------------------------------------------
 deltax = 195
 deltay = 56
 
- -------------------------------------------------------------------------------------------------------------------------------------------------- Standard fonts and colors --
+-- Standard fonts and colors -------------------------------------------------------------------------------------------------------------------
 txt_load_font("Consolas.ttf")
 font_red_16 = "-fx-font-family:\"Consolas\"; -fx-font-size:16px; -fx-fill: red; -fx-text-alignment: LEFT;"
 font_orange_16 = "-fx-font-family:\"Consolas\"; -fx-font-size:16px; -fx-fill: orange; -fx-text-alignment: LEFT;"
@@ -56,26 +53,26 @@ font_white_17 = "-fx-font-family:\"Inconsolata\"; -fx-font-size:17px; -fx-fill: 
 font_white_16 = "-fx-font-family:\"Inconsolata\"; -fx-font-size:16px; -fx-fill: white; -fx-font-weight:regular; -fx-text-alignment: RIGHT;"
 font_white_15 = "-fx-font-family:\"Inconsolata\"; -fx-font-size:15px; -fx-fill: white; -fx-font-weight:regular; -fx-text-alignment: RIGHT;" -- added font for Attitude ind baro display
 
-------------------------------------------------------------------------------------------------------------------------------------------------------- Frame image --
+-- Frame image -------------------------------------------------------------------------------------------------------------------
 -- on top of this backdrop place the buttons
 --img_add_fullscreen("garmin_panel_backdrop.png")
 
 img_add("garmin_panel_backdrop.png", 0, 0, 1414, 928)
 
--------------------------------------------------------------------------------------------------------------------------------------------------------------- Horizon image --
+-- Horizon image -------------------------------------------------------------------------------------------------------------------
 img_horizon = img_add("garmin_horizon.png", deltax-752, deltay-450, 2048, 1536)
 viewport_rect(img_horizon, deltax, deltay, 1024, 768)
 img_horizon_scale = img_add("garmin_horizon_scale.png", deltax-565, deltay-483, 2048, 1536)
 viewport_rect(img_horizon_scale, 318+deltax, 127+deltay, 280, 268)
 
-------------------------------------------------------------------------------------------------------------------------------------------------------- Glass panel backdrop --
+-- Glass panel backdrop -------------------------------------------------------------------------------------------------------------------
 img_add("garmin_pfd_backdrop.png",deltax, deltay, 1024, 768)
 
-------------------------------------------------------------------------------------------------------------------------------------------------------- Turn/Slip Indicators --
+-- Turn/Slip Indicators -------------------------------------------------------------------------------------------------------------------
 img_roll_indicator = img_add("garmin_roll_indicator.png", deltax, deltay, 1024, 768)
 img_slip_indicator = img_add("garmin_slip_indicator.png", deltax, deltay, 1024, 768)
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------- Speed tape --
+-- Speed tape -------------------------------------------------------------------------------------------------------------------
 function item_value_callback_speed(i)
     return string.format("%d", 0 - (i * 10) )
 end
@@ -86,7 +83,7 @@ running_img_speed  = running_img_add_ver("garmin_speedtapeimage.png", 217+deltax
 running_img_move_carot(running_img_speed, 0)
 running_txt_move_carot(running_text_speed, 0)
 
------------------------------------------------------------------------------------------------------------------------------------------------------------ Altitude tape --
+-- Altitude tape -------------------------------------------------------------------------------------------------------------------
 function item_value_callback_alt(i)
 	return string.format("%d", i * 100 * -1 )
 end
@@ -97,15 +94,15 @@ running_img_alt  = running_img_add_ver("garmin_alttapeimage.png", 705+deltax, 11
 running_img_move_carot(running_img_alt, 0)
 running_txt_move_carot(running_text_alt, 0)
 
-------------------------------------------------------------------------------------------------------------------------------------------------------- Speed amd alt boxes --
+-- Speed amd alt boxes -------------------------------------------------------------------------------------------------------------------
 img_add("garmin_speedbox.png",157+deltax, 250+deltay, 79, 69)
 img_add("garmin_altbox.png",705+deltax, 252+deltay, 98, 66)
 
 
-txt_add(call_sign, font_orange_20, 878+deltax, 349-144+deltay, 200, 60)
+--txt_add(call_sign, font_orange_20, 878+deltax, 349-144+deltay, 200, 60)
 --FD_bars = img_add ( "fd_bars.png" , 545 , 342 , 219 , 33 )
 
------------------------------------------------------------------------------------------------------------------------------------------------------ Running text airspeed --
+-- Running text airspeed -------------------------------------------------------------------------------------------------------------------
 function item_value_callback_inner_speed_minor(i)
     
 	if i > 0 then
@@ -138,7 +135,7 @@ txt_add("TAS", font_white_18, 152+deltax, 460+deltay, 30, 40)
 txt_tas = txt_add("000", font_white_25, 182+deltax, 456+deltay, 40, 40)
 txt_add("KT", font_white_15, 208+deltax, 465+deltay, 30, 40)
 
----------------------------------------------------------------------------------------------------------------------------------------------------- Running text altitude --
+-- Running text altitude -------------------------------------------------------------------------------------------------------------------
 function item_value_callback_inner_alt_minor(i)
 	
 	if i == 0 then
@@ -185,7 +182,7 @@ running_txt_move_carot(running_text_inner_alt_major1000_id, 0)
 running_txt_viewport_rect(running_text_inner_alt_major1000_id, 724+deltax, 265+deltay, 35, 40)
 
 
------------------------------------------------------------------------------------------------------------------------------------------------------------------ HSI parts --
+-- HSI parts -------------------------------------------------------------------------------------------------------------------
 img_compasrose = img_add("garmin_compassrose.png", 317+deltax, 444+deltay, 285, 285)
 
 --[[
@@ -202,8 +199,8 @@ img_wind_rose_arrow = img_add("wind_rose_arrow.png",30+deltax,460+deltay,50,50)
 txt_wind_speed = txt_add("0", font_limegreen_18, 5+deltax,510+deltay-65, 100, 60)
 --]]
 
------------------------------------------------------------------------------------------------------------------------------------------------------------ Attitude get data --
 function IBS_attitude(roll, pitch, verticalspeed, slip, vs_tgt, rad_alt)    -- add target bug on 
+-- Attitude get data -------------------------------------------------------------------------------------------------------------
 
 --vs_status= vs_tgt
     
@@ -263,8 +260,8 @@ function IBS_attitude(roll, pitch, verticalspeed, slip, vs_tgt, rad_alt)    -- a
 		 move(img_slip_indicator, (slip_rate*20) + deltax, nil, nil, nil)
 end
 
----------------------------------------------------------------------------------------------------------------------------------------------------------- Airspeed get data --
 function IBS_airspeed(airspeed,ias)
+-- Airspeed get data -------------------------------------------------------------------------------------------------------------------
 		
 		airspeed = var_cap(airspeed, 0, 999)
 		
@@ -292,8 +289,8 @@ function IBS_airspeed(airspeed,ias)
 end
 
 
----------------------------------------------------------------------------------------------------------------------------------------------------------- Altitude get data --
 function IBS_altitude(altitude)
+-- Altitude get data -------------------------------------------------------------------------------------------------------------------
 	
 	-- Altitude indicator running image
 	altitude = var_cap(altitude, 0, 40000)
@@ -336,17 +333,16 @@ end
  
 -- Data subscribtions --
 
------------------------------------------------------------------------------------------------------------------------------------------------------------ Attitude get data --
 xpl_dataref_subscribe("sim/flightmodel/position/phi", "FLOAT",
                         "sim/flightmodel/position/theta", "FLOAT",
                         "sim/flightmodel/position/vh_ind_fpm", "FLOAT",
 												"sim/cockpit2/gauges/indicators/slip_deg", "FLOAT",
                         "sim/cockpit2/autopilot/vvi_dial_fpm", "FLOAT",
                         "sim/cockpit2/gauges/indicators/radio_altimeter_height_ft_pilot","FLOAT", IBS_attitude)-- actual vvi tgt vvi sim/cockpit2/gauges/indicators/vvi_fpm_pilot
+-- Attitude get data -----------------------------------------------------------------------------------------------------------------
 												
--------------------------------------------------------------------------------------------------------------------------------------------------------------- Speed get data --
+-- Speed get data --------------------------------------------------------------------------------------------------------------------
 xpl_dataref_subscribe("sim/cockpit2/gauges/indicators/airspeed_kts_pilot", "FLOAT",
 												                        "sim/cockpit/autopilot/airspeed", "FLOAT", IBS_airspeed)
 
------------------------------------------------------------------------------------------------------------------------------------------------------------ Altitude get data --
-xpl_dataref_subscribe("sim/cockpit2/gauges/indicators/radio_altimeter_height_ft_pilot","FLOAT", IBS_altitude)
+xpl_dataref_subscribe("sim/cockpit2/gauges/indicators/radio_altimeter_height_ft_pilot","FLOAT", IBS_altitude)-- Altitude get data -----------------------------------------------------------------------------------------------------------------
